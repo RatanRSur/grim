@@ -74,7 +74,10 @@ export class DefaultAIClient implements IAIClient {
 
     try {
       const webSearchTool = { type: "web_search_preview" };
-      const tools = [...(params.tools ?? []), webSearchTool];
+      const tools = [
+        ...(params.tools ?? []),
+        ...(params.tool_choice !== 'required' ? [webSearchTool] : []),
+      ];
 
       const expandedParams: ResponseCreateParamsNonStreaming = {
         ...params,
